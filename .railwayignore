@@ -1,0 +1,8 @@
+# Ignore development files
+node_modules/
+.env
+.env.local
+.env.*.local
+
+# Keep build artifacts
+!build/

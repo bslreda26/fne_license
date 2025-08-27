@@ -8,6 +8,7 @@
     "start": "node build/bin/server.js",
     "postinstall": "npm run build",
     "build": "node ace build",
+    "railway:start": "npm run build && npm start",
     "dev": "node ace serve --hmr",
     "test": "node ace test",
     "lint": "eslint .",
