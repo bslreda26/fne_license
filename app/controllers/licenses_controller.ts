@@ -1,6 +1,5 @@
 import { HttpContext } from '@adonisjs/core/http'
 import { DateTime } from 'luxon'
-import License from '#models/license'
 import { LicenseService } from '#services/license_service'
 
 export default class LicensesController {

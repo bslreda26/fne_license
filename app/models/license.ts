@@ -3,23 +3,23 @@ import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 export default class License extends BaseModel {
   @column({ isPrimary: true })
-  public id: number
+  public id!: number
 
   @column({ columnName: 'client_id' })
-  public clientId: string
+  public clientId!: string
 
   @column({ columnName: 'license_key' })
-  public licenseKey: string
+  public licenseKey!: string
 
   @column()
-  public status: 'active' | 'expired' | 'revoked'
+  public status!: 'active' | 'expired' | 'revoked'
 
   @column.dateTime()
-  public validUntil: DateTime
+  public validUntil!: DateTime
 
   @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
+  public createdAt!: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
+  public updatedAt!: DateTime
 }
