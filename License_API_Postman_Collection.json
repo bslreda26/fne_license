@@ -1,0 +1,239 @@
+{
+  "info": {
+    "name": "License API Collection",
+    "description": "Complete collection for testing License API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Licenses",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/licenses?page=1&limit=10&status=active&client_id=client123",
+          "host": ["{{base_url}}"],
+          "path": ["api", "licenses"],
+          "query": [
+            {
+              "key": "page",
+              "value": "1",
+              "description": "Page number for pagination"
+            },
+            {
+              "key": "limit",
+              "value": "10",
+              "description": "Number of items per page"
+            },
+            {
+              "key": "status",
+              "value": "active",
+              "description": "Filter by status (active, expired, revoked)"
+            },
+            {
+              "key": "client_id",
+              "value": "client123",
+              "description": "Filter by client ID"
+            }
+          ]
+        },
+        "description": "Get all licenses with optional pagination and filtering"
+      }
+    },
+    {
+      "name": "Get License by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/licenses/1",
+          "host": ["{{base_url}}"],
+          "path": ["api", "licenses", "1"]
+        },
+        "description": "Get a specific license by its ID"
+      }
+    },
+    {
+      "name": "Create New License",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clientId\": \"client123\",\n  \"licenseKey\": \"ABCD-1234-EFGH-5678\",\n  \"status\": \"active\",\n  \"validUntil\": \"2025-12-31T23:59:59.000Z\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/licenses",
+          "host": ["{{base_url}}"],
+          "path": ["api", "licenses"]
+        },
+        "description": "Create a new license"
+      }
+    },
+    {
+      "name": "Create License with Generated Key",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clientId\": \"client456\",\n  \"status\": \"active\",\n  \"validUntil\": \"2025-06-30T23:59:59.000Z\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/licenses",
+          "host": ["{{base_url}}"],
+          "path": ["api", "licenses"]
+        },
+        "description": "Create a license without specifying licenseKey (will be generated)"
+      }
+    },
+    {
+      "name": "Update License",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clientId\": \"client123_updated\",\n  \"status\": \"active\",\n  \"validUntil\": \"2026-01-31T23:59:59.000Z\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/licenses/1",
+          "host": ["{{base_url}}"],
+          "path": ["api", "licenses", "1"]
+        },
+        "description": "Update an existing license"
+      }
+    },
+    {
+      "name": "Revoke License",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/licenses/1/revoke",
+          "host": ["{{base_url}}"],
+          "path": ["api", "licenses", "1", "revoke"]
+        },
+        "description": "Revoke a license (changes status to 'revoked')"
+      }
+    },
+    {
+      "name": "Validate License",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"licenseKey\": \"ABCD-1234-EFGH-5678\",\n  \"clientId\": \"client123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/licenses/validate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "licenses", "validate"]
+        },
+        "description": "Validate a license key for a specific client"
+      }
+    },
+    {
+      "name": "Validate Expired License",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"licenseKey\": \"EXPIRED-KEY-1234\",\n  \"clientId\": \"client123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/licenses/validate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "licenses", "validate"]
+        },
+        "description": "Test validation with an expired license"
+      }
+    },
+    {
+      "name": "Delete License",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/licenses/1",
+          "host": ["{{base_url}}"],
+          "path": ["api", "licenses", "1"]
+        },
+        "description": "Delete a license permanently"
+      }
+    },
+    {
+      "name": "Get Licenses by Client ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/licenses/client/client123",
+          "host": ["{{base_url}}"],
+          "path": ["api", "licenses", "client", "client123"]
+        },
+        "description": "Get all licenses for a specific client ID"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3333",
+      "type": "string",
+      "description": "Base URL for the API"
+    }
+  ]
+}
