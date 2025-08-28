@@ -203,6 +203,8 @@ export class LicenseService {
         clientId: license.clientId,
         status: license.status,
         validUntil: license.validUntil,
+        pointDeVente: license.pointDeVente,
+        maxPointDeVente: license.maxPointDeVente,
       },
     }
   }
