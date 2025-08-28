@@ -196,17 +196,7 @@ export class LicenseService {
       }
     }
 
-    return {
-      valid: true,
-      license: {
-        id: license.id,
-        clientId: license.clientId,
-        status: license.status,
-        validUntil: license.validUntil,
-        pointDeVente: license.pointDeVente,
-        maxPointDeVente: license.maxPointDeVente,
-      },
-    }
+    return await License
   }
 
   /**
