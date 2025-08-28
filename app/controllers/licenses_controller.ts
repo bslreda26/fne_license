@@ -45,7 +45,9 @@ export default class LicensesController {
    */
   async store({ request, response }: HttpContext) {
     try {
-      const data = request.only(['clientId', 'licenseKey', 'status', 'validUntil'])
+      const data = request.only(['clientId', 'licenseKey', 'status', 'validUntil', 'pointDeVente', 'maxPointDeVente'])
+
+      console.log('Creating license with data:', data)
       
       // Convert validUntil string to DateTime object
       if (data.validUntil && typeof data.validUntil === 'string') {
@@ -76,7 +78,7 @@ export default class LicensesController {
    */
   async update({ params, request, response }: HttpContext) {
     try {
-      const data = request.only(['clientId', 'status', 'validUntil'])
+      const data = request.only(['clientId', 'status', 'validUntil', 'pointDeVente', 'maxPointDeVente'])
       
       // Convert validUntil string to DateTime object
       if (data.validUntil && typeof data.validUntil === 'string') {
@@ -164,6 +166,54 @@ export default class LicensesController {
         error: 'Failed to fetch licenses by client ID',
         details: error.message || 'Unknown error'
       })
+    }
+  }
+
+  /**
+   * Update point de vente for a license
+   */
+  async updatePointDeVente({ params, request, response }: HttpContext) {
+    try {
+      const { pointDeVente } = request.only(['pointDeVente'])
+      
+      if (pointDeVente === undefined || pointDeVente === null) {
+        return response.badRequest({ error: 'pointDeVente is required' })
+      }
+
+      const license = await this.licenseService.updatePointDeVente(params.id, pointDeVente)
+      
+      if (!license) {
+        return response.notFound({ error: 'License not found' })
+      }
+
+      return response.ok(license)
+    } catch (error) {
+      return response.internalServerError({ error: 'Failed to update point de vente' })
+    }
+  }
+
+  /**
+   * Get licenses by point de vente range
+   */
+  async getByPointDeVenteRange({ request, response }: HttpContext) {
+    try {
+      const { minPointDeVente, maxPointDeVente, page = 1, limit = 10 } = request.only([
+        'minPointDeVente', 
+        'maxPointDeVente', 
+        'page', 
+        'limit'
+      ])
+      
+      const licenses = await this.licenseService.getLicensesByPointDeVenteRange({
+        minPointDeVente: minPointDeVente ? parseInt(minPointDeVente) : undefined,
+        maxPointDeVente: maxPointDeVente ? parseInt(maxPointDeVente) : undefined,
+        page: parseInt(page),
+        limit: parseInt(limit)
+      })
+      
+      return response.ok(licenses)
+    } catch (error) {
+      return response.internalServerError({ error: 'Failed to fetch licenses by point de vente range' })
     }
   }
 }

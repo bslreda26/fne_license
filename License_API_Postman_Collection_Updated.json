@@ -1,0 +1,558 @@
+{
+	"info": {
+		"_postman_id": "license-api-collection",
+		"name": "License API - Complete Collection",
+		"description": "Complete API collection for License Management System with Point de Vente functionality",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12345678"
+	},
+	"item": [
+		{
+			"name": "License Management",
+			"item": [
+				{
+					"name": "Get All Licenses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://fnelicense-production.up.railway.app/api/licenses?page=1&limit=10&status=active&client_id=CLIENT123",
+							"protocol": "https",
+							"host": [
+								"fnelicense-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"licenses"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number for pagination"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Number of items per page"
+								},
+								{
+									"key": "status",
+									"value": "active",
+									"description": "Filter by license status (active, expired, revoked)"
+								},
+								{
+									"key": "client_id",
+									"value": "CLIENT123",
+									"description": "Filter by client ID"
+								}
+							]
+						},
+						"description": "Retrieve all licenses with pagination and filtering options"
+					},
+					"response": []
+				},
+				{
+					"name": "Get License by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://fnelicense-production.up.railway.app/api/licenses/1",
+							"protocol": "https",
+							"host": [
+								"fnelicense-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"licenses",
+								"1"
+							]
+						},
+						"description": "Retrieve a specific license by its ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Create New License",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientId\": \"CLIENT123\",\n  \"licenseKey\": \"ABCD-EFGH-IJKL-MNOP\",\n  \"status\": \"active\",\n  \"validUntil\": \"2025-12-31T23:59:59.000Z\",\n  \"pointDeVente\": 5,\n  \"maxPointDeVente\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fnelicense-production.up.railway.app/api/licenses",
+							"protocol": "https",
+							"host": [
+								"fnelicense-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"licenses"
+							]
+						},
+						"description": "Create a new license with point de vente settings"
+					},
+					"response": []
+				},
+				{
+					"name": "Update License",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientId\": \"CLIENT123\",\n  \"status\": \"active\",\n  \"validUntil\": \"2025-12-31T23:59:59.000Z\",\n  \"pointDeVente\": 7,\n  \"maxPointDeVente\": 15\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fnelicense-production.up.railway.app/api/licenses/1",
+							"protocol": "https",
+							"host": [
+								"fnelicense-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"licenses",
+								"1"
+							]
+						},
+						"description": "Update an existing license including point de vente values"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete License",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://fnelicense-production.up.railway.app/api/licenses/1",
+							"protocol": "https",
+							"host": [
+								"fnelicense-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"licenses",
+								"1"
+							]
+						},
+						"description": "Delete a license by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke License",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://fnelicense-production.up.railway.app/api/licenses/1/revoke",
+							"protocol": "https",
+							"host": [
+								"fnelicense-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"licenses",
+								"1",
+								"revoke"
+							]
+						},
+						"description": "Revoke a license (change status to revoked)"
+					},
+					"response": []
+				},
+				{
+					"name": "Validate License",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"licenseKey\": \"ABCD-EFGH-IJKL-MNOP\",\n  \"clientId\": \"CLIENT123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fnelicense-production.up.railway.app/api/licenses/validate",
+							"protocol": "https",
+							"host": [
+								"fnelicense-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"licenses",
+								"validate"
+							]
+						},
+						"description": "Validate a license key with client ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Licenses by Client ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://fnelicense-production.up.railway.app/api/licenses/client/CLIENT123",
+							"protocol": "https",
+							"host": [
+								"fnelicense-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"licenses",
+								"client",
+								"CLIENT123"
+							]
+						},
+						"description": "Get all licenses for a specific client"
+					},
+					"response": []
+				}
+			],
+			"description": "Core license management operations"
+		},
+		{
+			"name": "Point de Vente Management",
+			"item": [
+				{
+					"name": "Update Point de Vente",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"pointDeVente\": 8\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fnelicense-production.up.railway.app/api/licenses/1/point-de-vente",
+							"protocol": "https",
+							"host": [
+								"fnelicense-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"licenses",
+								"1",
+								"point-de-vente"
+							]
+						},
+						"description": "Update the point de vente value for a specific license"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Licenses by Point de Vente Range",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://fnelicense-production.up.railway.app/api/licenses/point-de-vente/range?minPointDeVente=5&maxPointDeVente=15&page=1&limit=10",
+							"protocol": "https",
+							"host": [
+								"fnelicense-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"licenses",
+								"point-de-vente",
+								"range"
+							],
+							"query": [
+								{
+									"key": "minPointDeVente",
+									"value": "5",
+									"description": "Minimum point de vente value"
+								},
+								{
+									"key": "maxPointDeVente",
+									"value": "15",
+									"description": "Maximum point de vente value"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number for pagination"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Number of items per page"
+								}
+							]
+						},
+						"description": "Get licenses within a specific point de vente range"
+					},
+					"response": []
+				}
+			],
+			"description": "Point de vente specific operations"
+		},
+		{
+			"name": "Examples & Templates",
+			"item": [
+				{
+					"name": "Create License - Basic Template",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientId\": \"CLIENT001\",\n  \"validUntil\": \"2025-12-31T23:59:59.000Z\",\n  \"pointDeVente\": 0,\n  \"maxPointDeVente\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fnelicense-production.up.railway.app/api/licenses",
+							"protocol": "https",
+							"host": [
+								"fnelicense-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"licenses"
+							]
+						},
+						"description": "Create a basic license without custom license key (auto-generated)"
+					},
+					"response": []
+				},
+				{
+					"name": "Create License - Premium Template",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientId\": \"PREMIUM001\",\n  \"licenseKey\": \"PREMIUM-2024-ABCD-EFGH\",\n  \"status\": \"active\",\n  \"validUntil\": \"2026-12-31T23:59:59.000Z\",\n  \"pointDeVente\": 0,\n  \"maxPointDeVente\": 50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fnelicense-production.up.railway.app/api/licenses",
+							"protocol": "https",
+							"host": [
+								"fnelicense-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"licenses"
+							]
+						},
+						"description": "Create a premium license with custom key and higher point de vente limit"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Point de Vente - Increment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"pointDeVente\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fnelicense-production.up.railway.app/api/licenses/1/point-de-vente",
+							"protocol": "https",
+							"host": [
+								"fnelicense-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"licenses",
+								"1",
+								"point-de-vente"
+							]
+						},
+						"description": "Increment point de vente usage for a license"
+					},
+					"response": []
+				}
+			],
+			"description": "Example requests and templates for common use cases"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Set common headers for all requests",
+					"pm.request.headers.add({\n    key: 'Accept',\n    value: 'application/json'\n});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Common test script for all requests",
+					"pm.test(\"Status code is 200 or 201\", function () {\n    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);\n});\n\npm.test(\"Response has JSON content type\", function () {\n    if (pm.response.code !== 204) {\n        pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\n    }\n});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://fnelicense-production.up.railway.app",
+			"type": "string"
+		},
+		{
+			"key": "licenseId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "clientId",
+			"value": "CLIENT123",
+			"type": "string"
+		},
+		{
+			"key": "licenseKey",
+			"value": "ABCD-EFGH-IJKL-MNOP",
+			"type": "string"
+		}
+	]
+}

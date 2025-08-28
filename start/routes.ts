@@ -25,4 +25,8 @@ router.group(() => {
   router.post('/:id/revoke', '#controllers/licenses_controller.revoke')
   router.post('/validate', '#controllers/licenses_controller.validate')
   router.get('/client/:clientId', '#controllers/licenses_controller.getByClientId')
+  
+  // Point de vente routes
+  router.put('/:id/point-de-vente', '#controllers/licenses_controller.updatePointDeVente')
+  router.get('/point-de-vente/range', '#controllers/licenses_controller.getByPointDeVenteRange')
 }).prefix('/api/licenses')

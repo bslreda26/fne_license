@@ -22,4 +22,10 @@ export default class License extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt!: DateTime
+
+  @column({ columnName: 'point_de_vente' })
+  public pointDeVente!: number
+
+  @column({ columnName: 'max_point_de_vente' })
+  public maxPointDeVente!: number
 }

@@ -7,12 +7,16 @@ export interface CreateLicenseData {
   licenseKey?: string
   status?: 'active' | 'expired' | 'revoked'
   validUntil: DateTime
+  pointDeVente?: number
+  maxPointDeVente?: number
 }
 
 export interface UpdateLicenseData {
   clientId?: string
   status?: 'active' | 'expired' | 'revoked'
   validUntil?: DateTime
+  pointDeVente?: number
+  maxPointDeVente?: number
 }
 
 export interface GetLicensesOptions {
@@ -20,6 +24,13 @@ export interface GetLicensesOptions {
   limit?: number
   status?: string
   clientId?: string
+}
+
+export interface GetLicensesByPointDeVenteRangeOptions {
+  minPointDeVente?: number
+  maxPointDeVente?: number
+  page?: number
+  limit?: number
 }
 
 export class LicenseService {
@@ -88,6 +99,8 @@ export class LicenseService {
       ...data,
       licenseKey,
       status: data.status || 'active',
+      pointDeVente: data.pointDeVente || 0,
+      maxPointDeVente: data.maxPointDeVente || 0,
     }
 
     return await License.create(licenseData)
@@ -243,5 +256,56 @@ export class LicenseService {
     }
 
     return expiredLicenses.length
+  }
+
+  /**
+   * Update point de vente for a license
+   */
+  async updatePointDeVente(id: number, pointDeVente: number) {
+    const license = await this.getLicenseById(id)
+    if (!license) {
+      return null
+    }
+
+    // Validate that point de vente doesn't exceed max point de vente
+    if (pointDeVente > license.maxPointDeVente) {
+      throw new Exception('Point de vente cannot exceed max point de vente', {
+        status: 400,
+      })
+    }
+
+    license.pointDeVente = pointDeVente
+    await license.save()
+
+    return license
+  }
+
+  /**
+   * Get licenses by point de vente range
+   */
+  async getLicensesByPointDeVenteRange(options: GetLicensesByPointDeVenteRangeOptions = {}) {
+    const { minPointDeVente, maxPointDeVente, page = 1, limit = 10 } = options
+
+    const query = License.query()
+
+    if (minPointDeVente !== undefined) {
+      query.where('pointDeVente', '>=', minPointDeVente)
+    }
+
+    if (maxPointDeVente !== undefined) {
+      query.where('pointDeVente', '<=', maxPointDeVente)
+    }
+
+    return await query.orderBy('pointDeVente', 'desc').paginate(page, limit)
+  }
+
+  /**
+   * Get licenses that are near their max point de vente limit
+   */
+  async getLicensesNearLimit(threshold: number = 0.8) {
+    return await License.query()
+      .where('maxPointDeVente', '>', 0)
+      .whereRaw('point_de_vente >= ? * max_point_de_vente', [threshold])
+      .orderBy('pointDeVente', 'desc')
   }
 }
