@@ -196,7 +196,10 @@ export class LicenseService {
       }
     }
 
-    return await License
+    return {
+      valid: true,
+      license: license,
+    }
   }
 
   /**
